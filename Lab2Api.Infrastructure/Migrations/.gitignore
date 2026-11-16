@@ -1,0 +1,23 @@
+# Build files
+bin/
+obj/
+
+#Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+
+#SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+#Backup files
+*.bak
+
+#Environment and secrets
+.env
+.env.*
+**/appsettings.Development.json
+appsettings.Development.json
