@@ -126,8 +126,7 @@ if (dto.Description?.Length > 500)
         "Description cannot exceed 500 characters");
 }
 
-entity.Name = dto.Name;
-entity.Description = dto.Description ?? string.Empty;
+entity.ApplyUpdate(dto);
 
 var result = new EntityResponseDto
 {

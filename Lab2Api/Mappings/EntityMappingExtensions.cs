@@ -24,4 +24,10 @@ public static EntityResponseDto ToResponseDto(this Entity entity)
         CreatedAt = entity.CreatedAt
     };
 }
+public static void ApplyUpdate(
+    this Entity entity, UpdateEntityDto dto)
+{
+    entity.Name = dto.Name;
+    entity.Description = dto.Description ?? string.Empty;
+}
 }
