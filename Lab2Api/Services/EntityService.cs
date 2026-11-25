@@ -102,6 +102,7 @@ return Task.FromResult(result);
 public async Task<EntityResponseDto> UpdateAsync(
     int id, UpdateEntityDto dto)
 {
+    ArgumentNullException.ThrowIfNull(dto);
     var entity = _context != null
         ? await _context.Entities.FindAsync(id)
         : _entities.FirstOrDefault(e => e.Id == id);
