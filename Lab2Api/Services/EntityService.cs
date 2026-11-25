@@ -102,6 +102,7 @@ return Task.FromResult(result);
 public async Task<EntityResponseDto> UpdateAsync(
     int id, UpdateEntityDto dto)
 {
+    ArgumentNullException.ThrowIfNull(dto);
     var entity = _context != null
         ? await _context.Entities.FindAsync(id)
         : _entities.FirstOrDefault(e => e.Id == id);
@@ -126,22 +127,13 @@ if (dto.Description?.Length > 500)
         "Description cannot exceed 500 characters");
 }
 
-entity.Name = dto.Name;
-entity.Description = dto.Description ?? string.Empty;
-
-var result = new EntityResponseDto
-{
-    Id = entity.Id,
-    Name = entity.Name,
-    Description = entity.Description ?? string.Empty,
-    CreatedAt = entity.CreatedAt
-};
+entity.ApplyUpdate(dto);
 
 if (_context != null)
 {
     await _context.SaveChangesAsync();
 }
 
-return result;
+return entity.ToResponseDto();
 }
 }

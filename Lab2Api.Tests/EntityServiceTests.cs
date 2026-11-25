@@ -341,4 +341,19 @@ await Assert.ThrowsAsync<ArgumentException>(
     async () => await service.UpdateAsync(
         created.Id, updateDto));
 }
+[Fact]
+public async Task UpdateAsync_NullDto_ThrowsArgumentNullException()
+{
+var service = new EntityService();
+
+var created = await service.CreateAsync(
+    new CreateEntityDto
+    {
+        Name = "Original Name",
+        Description = "Original Description"
+    });
+
+await Assert.ThrowsAsync<ArgumentNullException>(
+    async () => await service.UpdateAsync(created.Id, null!));
+}
 }

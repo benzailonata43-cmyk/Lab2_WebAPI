@@ -47,14 +47,32 @@ page, pageSize, search);
 
 return Ok(result);
 }
+/// <summary>
+/// Updates an existing entity by its ID.
+/// </summary>
+/// <param name="id">Positive entity identifier.</param>
+/// <param name="dto">New name and description.</param>
+/// <returns>The updated entity.</returns>
+/// <response code="200">Entity updated successfully.</response>
+/// <response code="400">Invalid ID or update data.</response>
+/// <response code="404">Entity not found.</response>
 [HttpPut("{id}")]
+[Consumes("application/json")]
+[Produces("application/json")]
 [ProducesResponseType(typeof(EntityResponseDto), 200)]
 [ProducesResponseType(400)]
 [ProducesResponseType(404)]
 public async Task<IActionResult> Update(
-int id,
-[FromBody] UpdateEntityDto dto)
+    [FromRoute, Range(1, int.MaxValue)] int id,
+    [FromBody] UpdateEntityDto dto)
 {
+    if (id <= 0)
+{
+    return BadRequest(new
+    {
+        message = "ID must be greater than zero"
+    });
+}
 if (!ModelState.IsValid)
 {
 return BadRequest(ModelState);
