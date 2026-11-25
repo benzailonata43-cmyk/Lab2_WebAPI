@@ -129,19 +129,11 @@ if (dto.Description?.Length > 500)
 
 entity.ApplyUpdate(dto);
 
-var result = new EntityResponseDto
-{
-    Id = entity.Id,
-    Name = entity.Name,
-    Description = entity.Description ?? string.Empty,
-    CreatedAt = entity.CreatedAt
-};
-
 if (_context != null)
 {
     await _context.SaveChangesAsync();
 }
 
-return result;
+return entity.ToResponseDto();
 }
 }
